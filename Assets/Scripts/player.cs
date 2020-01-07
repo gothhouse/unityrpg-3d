@@ -13,25 +13,27 @@ public class player : MonoBehaviour
 
 
     //Functions
-   void Update()
-   {
+    void Update()
+    {
         //player mvt
         Plane playerPlane = new Plane(Vector3.up, transform.position);
         Ray ray = UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition);
         float hitDistance = 0.0f;
 
-        if(playerPlane.Raycast(ray, out hitDistance))
+        if (playerPlane.Raycast(ray, out hitDistance))
         {
             Vector3 mousePosition = ray.GetPoint(hitDistance);
-            if(Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 moving = true;
 
-                if(pmrSpawned)
+                if (pmrSpawned)
                 {
                     pmr = null;
                     pmr = Instantiate(playerMovePoint.transform, mousePosition, Quaternion.identity);
-                } else {
+                }
+                else
+                {
                     pmr = Instantiate(playerMovePoint.transform, mousePosition, Quaternion.identity);
                 }
             }
@@ -41,6 +43,15 @@ public class player : MonoBehaviour
         else
             pmrSpawned = false;
         if (moving)
-            transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed);
-   }
+        {
+            Move();
+
+        }
+    }
+
+    public void Move()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed);
+        this.transform.LookAt(pmr.transform);
+    }
 }
