@@ -6,7 +6,9 @@ public class player : MonoBehaviour
 {
     //Variables
     public float movementSpeed;
-
+    public GameObject playerMovePoint;
+    private Transform pmr;
+    private bool pmrSpawned;
 
 
     //Functions
@@ -19,13 +21,22 @@ public class player : MonoBehaviour
 
         if(playerPlane.Raycast(ray, out hitDistance))
         {
-            Vector3 targetPoint = ray.GetPoint(hitDistance);
-            //Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
+            Vector3 mousePosition = ray.GetPoint(hitDistance);
             if(Input.GetMouseButtonDown(0))
             {
-                print(targetPoint);
+                if(pmrSpawned)
+                {
+                    pmr = null;
+                    pmr = Instantiate(playerMovePoint.transform, mousePosition, Quaternion.identity);
+                } else {
+                    pmr = Instantiate(playerMovePoint.transform, mousePosition, Quaternion.identity);
+                }
+                transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, 10f);
             }
         }
-
+        if (pmr)
+            pmrSpawned = true;
+        else
+            pmrSpawned = false;
    }
 }
