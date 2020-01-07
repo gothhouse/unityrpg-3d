@@ -9,6 +9,7 @@ public class player : MonoBehaviour
     public GameObject playerMovePoint;
     private Transform pmr;
     private bool pmrSpawned;
+    private bool moving;
 
 
     //Functions
@@ -24,6 +25,8 @@ public class player : MonoBehaviour
             Vector3 mousePosition = ray.GetPoint(hitDistance);
             if(Input.GetMouseButtonDown(0))
             {
+                moving = true;
+
                 if(pmrSpawned)
                 {
                     pmr = null;
@@ -31,12 +34,13 @@ public class player : MonoBehaviour
                 } else {
                     pmr = Instantiate(playerMovePoint.transform, mousePosition, Quaternion.identity);
                 }
-                transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, 10f);
             }
         }
         if (pmr)
             pmrSpawned = true;
         else
             pmrSpawned = false;
+        if (moving)
+            transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed);
    }
 }
