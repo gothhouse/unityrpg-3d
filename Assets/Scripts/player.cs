@@ -10,6 +10,7 @@ public class player : MonoBehaviour
     private Transform pmr;
     private bool pmrSpawned;
     private bool moving;
+    private GameObject triggeringPMR;
 
 
     //Functions
@@ -51,7 +52,19 @@ public class player : MonoBehaviour
 
     public void Move()
     {
-        transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed);
-        this.transform.LookAt(pmr.transform);
+        if (pmr)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed);
+            this.transform.LookAt(pmr.transform);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "PMR")
+        {
+            triggeringPMR = other.gameObject;
+            triggeringPMR.GetComponent<PMR>().DestroyPMR();
+        }
     }
 }
