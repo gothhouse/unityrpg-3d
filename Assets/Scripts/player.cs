@@ -14,6 +14,10 @@ public class player : MonoBehaviour
 
 
     //Functions
+     void Start()
+    {
+        pmr = Instantiate(playerMovePoint.transform, this.transform.position, Quaternion.identity);
+    }
     void Update()
     {
         //player mvt
@@ -27,26 +31,12 @@ public class player : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 moving = true;
-
-                if (pmrSpawned)
-                {
-                    pmr = null;
-                    pmr = Instantiate(playerMovePoint.transform, mousePosition, Quaternion.identity);
-                }
-                else
-                {
-                    pmr = Instantiate(playerMovePoint.transform, mousePosition, Quaternion.identity);
-                }
+                pmr.transform.position = mousePosition;
             }
         }
-        if (pmr)
-            pmrSpawned = true;
-        else
-            pmrSpawned = false;
         if (moving)
         {
             Move();
-
         }
     }
 
@@ -64,7 +54,6 @@ public class player : MonoBehaviour
         if(other.tag == "PMR")
         {
             triggeringPMR = other.gameObject;
-            triggeringPMR.GetComponent<PMR>().DestroyPMR();
         }
     }
 }
