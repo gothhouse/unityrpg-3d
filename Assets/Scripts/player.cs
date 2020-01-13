@@ -5,15 +5,31 @@ using UnityEngine;
 public class player : MonoBehaviour
 {
     //Variables
-    public float movementSpeed;
 
+    // player
+    public float movementSpeed;
+    Animation anim;
+
+    public float attackTimer;
+
+    private bool moving;
+    private bool attacking;
+    private bool followingEnemy;
+
+    // pmr
     public GameObject playerMovePoint;
     private Transform pmr;
     private bool triggeringPMR;
 
-    private bool moving;
+   
 
-    Animation anim;
+    // enemy 
+    private bool triggeringEnemy;
+    private GameObject attackingEnemy;
+
+
+
+
 
     //Functions
     void Start()
@@ -27,6 +43,7 @@ public class player : MonoBehaviour
         //player mvt
         Plane playerPlane = new Plane(Vector3.up, transform.position);
         Ray ray = UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
         float hitDistance = 0.0f;
 
         if (playerPlane.Raycast(ray, out hitDistance))
@@ -38,16 +55,39 @@ public class player : MonoBehaviour
                 triggeringPMR = false;
                 pmr.transform.position = mousePosition;
                 pmr.GetComponent<BoxCollider>().enabled = true;
+
+                if(Physics.Raycast(ray, out hit))
+                {
+                    if (hit.collider.tag == "enemy")
+                    {
+                        attackingEnemy = hit.collider.gameObject;
+                        followingEnemy = true;
+                    }
+                } else {
+                    attackingEnemy = null;
+                    followingEnemy = false;
+                }
             }
         }
         if (moving)
             Move();
         else
-            Idle();
+        {
+            if (attacking)
+                Attack();
+            else
+                Idle();
+            
+        }
 
         if(triggeringPMR)
         {
             moving = false;
+        }
+
+        if(triggeringEnemy)
+        {
+            Attack();
         }
     }
 
@@ -58,10 +98,27 @@ public class player : MonoBehaviour
 
     public void Move()
     {
-        transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed);
-        this.transform.LookAt(pmr.transform);
+        if(followingEnemy)
+        {
+            if( triggeringEnemy == false)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, attackingEnemy.transform.position, movementSpeed);
+                this.transform.LookAt(attackingEnemy.transform);
+            } else {
+                Attack();
+            }
+        } else {
+            transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed);
+            this.transform.LookAt(pmr.transform);
+        }
 
         anim.CrossFade("walk");
+    }
+
+    public void Attack()
+    {
+        anim.CrossFade("attack");
+        transform.LookAt(attackingEnemy.transform);
     }
 
     void OnTriggerEnter(Collider other)
@@ -70,12 +127,22 @@ public class player : MonoBehaviour
         {
             triggeringPMR = true;
         }
+
+        if(other.tag =="enemy")
+        {
+            triggeringEnemy = true;
+        }
     }
     void OnTriggerExit(Collider other)
     {
         if(other.tag == "PMR")
-            {
+        {
             triggeringPMR = false;
+        }
+
+        if (other.tag == "enemy")
+        {
+            triggeringEnemy = false;
         }
     }
 
