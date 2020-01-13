@@ -6,17 +6,20 @@ public class player : MonoBehaviour
 {
     //Variables
     public float movementSpeed;
+
     public GameObject playerMovePoint;
     private Transform pmr;
-    private bool pmrSpawned;
-    private bool moving;
     private GameObject triggeringPMR;
 
+    private bool moving;
+
+    Animation anim;
 
     //Functions
-     void Start()
+    void Start()
     {
         pmr = Instantiate(playerMovePoint.transform, this.transform.position, Quaternion.identity);
+        anim = GetComponent<Animation>();
     }
     void Update()
     {
@@ -42,11 +45,10 @@ public class player : MonoBehaviour
 
     public void Move()
     {
-        if (pmr)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed);
-            this.transform.LookAt(pmr.transform);
-        }
+        transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed);
+        this.transform.LookAt(pmr.transform);
+
+        anim.CrossFade("walk");
     }
 
     void OnTriggerEnter(Collider other)
