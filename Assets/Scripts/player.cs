@@ -9,7 +9,7 @@ public class player : MonoBehaviour
 
     public GameObject playerMovePoint;
     private Transform pmr;
-    private GameObject triggeringPMR;
+    private bool triggeringPMR;
 
     private bool moving;
 
@@ -38,9 +38,19 @@ public class player : MonoBehaviour
             }
         }
         if (moving)
-        {
             Move();
+        else
+            Idle();
+
+        if(triggeringPMR)
+        {
+            moving = false;
         }
+    }
+
+    public void Idle()
+    {
+        anim.CrossFade("idle");
     }
 
     public void Move()
@@ -55,7 +65,15 @@ public class player : MonoBehaviour
     {
         if(other.tag == "PMR")
         {
-            triggeringPMR = other.gameObject;
+            triggeringPMR = true;
         }
     }
+    void OnTriggerExit(Collider other)
+    {
+        if(other.tag == "PMR")
+            {
+            triggeringPMR = false;
+        }
+    }
+
 }
