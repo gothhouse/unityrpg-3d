@@ -19,6 +19,7 @@ public class player : MonoBehaviour
     void Start()
     {
         pmr = Instantiate(playerMovePoint.transform, this.transform.position, Quaternion.identity);
+        pmr.GetComponent<BoxCollider>().enabled = false;
         anim = GetComponent<Animation>();
     }
     void Update()
@@ -34,7 +35,9 @@ public class player : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 moving = true;
+                triggeringPMR = false;
                 pmr.transform.position = mousePosition;
+                pmr.GetComponent<BoxCollider>().enabled = true;
             }
         }
         if (moving)
