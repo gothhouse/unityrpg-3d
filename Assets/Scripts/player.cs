@@ -16,6 +16,12 @@ public class player : MonoBehaviour
     private bool attacking;
     private bool followingEnemy;
 
+    private float damage;
+    public float minDamage;
+    public float maxDamage;
+
+    private bool attacked;
+
     // pmr
     public GameObject playerMovePoint;
     private Transform pmr;
@@ -100,13 +106,8 @@ public class player : MonoBehaviour
     {
         if(followingEnemy)
         {
-            if( triggeringEnemy == false)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, attackingEnemy.transform.position, movementSpeed);
-                this.transform.LookAt(attackingEnemy.transform);
-            } else {
-                Attack();
-            }
+            transform.position = Vector3.MoveTowards(transform.position, attackingEnemy.transform.position, movementSpeed);
+            this.transform.LookAt(attackingEnemy.transform);
         } else {
             transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed);
             this.transform.LookAt(pmr.transform);
@@ -117,8 +118,16 @@ public class player : MonoBehaviour
 
     public void Attack()
     {
-        anim.CrossFade("attack");
-        transform.LookAt(attackingEnemy.transform);
+        if(!attacked)
+        {
+            damage = Random.Range(minDamage, maxDamage);
+            print(damage);
+
+            anim.CrossFade("attack");
+            transform.LookAt(attackingEnemy.transform);
+        } else {
+
+        }
     }
 
     void OnTriggerEnter(Collider other)

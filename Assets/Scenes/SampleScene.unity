@@ -530,6 +530,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 0.1
   attackTimer: 1.5
+  minDamage: 10
+  maxDamage: 25
   playerMovePoint: {fileID: 3967282996648024718, guid: 77d97efa479204b4bbe1edb5cd8cc2ad,
     type: 3}
 --- !u!54 &1521632374
