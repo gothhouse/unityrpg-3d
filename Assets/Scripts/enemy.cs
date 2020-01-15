@@ -58,6 +58,9 @@ public class enemy : MonoBehaviour
 
     public void FollowPlayer()
     {
-        this.transform.position = Vector3.MoveTowards(transform.position, player.transform.position, movementSpeed);
+        if(!triggeringPlayer)
+        {
+            this.transform.position = Vector3.MoveTowards(transform.position, player.transform.position, movementSpeed);
+        }
     }
 }

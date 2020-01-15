@@ -117,8 +117,11 @@ public class player : MonoBehaviour
     {
         if(followingEnemy)
         {
-            transform.position = Vector3.MoveTowards(transform.position, attackingEnemy.transform.position, movementSpeed);
-            this.transform.LookAt(attackingEnemy.transform);
+            if(!triggeringEnemy)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, attackingEnemy.transform.position, movementSpeed);
+                this.transform.LookAt(attackingEnemy.transform);
+            }
         } else {
             transform.position = Vector3.MoveTowards(transform.position, pmr.transform.position, movementSpeed);
             this.transform.LookAt(pmr.transform);
