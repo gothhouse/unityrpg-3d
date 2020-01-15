@@ -17,6 +17,9 @@ public class enemy : MonoBehaviour
     public float attackTimer;
     private float _attackTimer;
 
+    public float maxDamage;
+    public float minDamage;
+
     //functions
     void Start()
     {
