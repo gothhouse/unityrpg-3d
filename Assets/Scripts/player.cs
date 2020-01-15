@@ -135,10 +135,14 @@ public class player : MonoBehaviour
             attacked = true;
         }
 
-        anim.CrossFade("attack");
-        transform.LookAt(attackingEnemy.transform);
+        if(attackingEnemy)
+        {
+            transform.LookAt(attackingEnemy.transform);
 
-        attackingEnemy.GetComponent<enemy>().aggro = true;
+            attackingEnemy.GetComponent<enemy>().aggro = true;
+        }
+
+        anim.CrossFade("attack");
     }
 
     void OnTriggerEnter(Collider other)
