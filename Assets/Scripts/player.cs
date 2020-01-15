@@ -11,6 +11,7 @@ public class player : MonoBehaviour
     Animation anim;
 
     public float attackTimer;
+    private float currentAttackTimer;
 
     private bool moving;
     private bool attacking;
@@ -43,6 +44,7 @@ public class player : MonoBehaviour
         pmr = Instantiate(playerMovePoint.transform, this.transform.position, Quaternion.identity);
         pmr.GetComponent<BoxCollider>().enabled = false;
         anim = GetComponent<Animation>();
+        currentAttackTimer = attackTimer;
     }
     void Update()
     {
@@ -62,14 +64,16 @@ public class player : MonoBehaviour
                 pmr.transform.position = mousePosition;
                 pmr.GetComponent<BoxCollider>().enabled = true;
 
-                if(Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out hit))
                 {
                     if (hit.collider.tag == "enemy")
                     {
                         attackingEnemy = hit.collider.gameObject;
                         followingEnemy = true;
                     }
-                } else {
+                }
+                else
+                {
                     attackingEnemy = null;
                     followingEnemy = false;
                 }
@@ -83,17 +87,25 @@ public class player : MonoBehaviour
                 Attack();
             else
                 Idle();
-            
+
         }
 
-        if(triggeringPMR)
+        if (triggeringPMR)
         {
             moving = false;
         }
 
-        if(triggeringEnemy)
-        {
+        if (triggeringEnemy)
             Attack();
+        if (attacked)
+        {
+            currentAttackTimer -= 1 * Time.deltaTime;
+        }
+
+        if (currentAttackTimer <= 0)
+        { 
+        currentAttackTimer = attackTimer;
+            attacked = false;
         }
     }
 
@@ -122,12 +134,11 @@ public class player : MonoBehaviour
         {
             damage = Random.Range(minDamage, maxDamage);
             print(damage);
-
-            anim.CrossFade("attack");
-            transform.LookAt(attackingEnemy.transform);
-        } else {
-
+            attacked = true;
         }
+
+        anim.CrossFade("attack");
+        transform.LookAt(attackingEnemy.transform);
     }
 
     void OnTriggerEnter(Collider other)
