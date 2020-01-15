@@ -70,14 +70,13 @@ public class player : MonoBehaviour
                     {
                         attackingEnemy = hit.collider.gameObject;
                         followingEnemy = true;
+                    } else {
+                        attackingEnemy = null;
+                        followingEnemy = false;
                     }
                 }
-                else
-                {
-                    attackingEnemy = null;
-                    followingEnemy = false;
-                }
-            }
+
+            }   
         }
         if (moving)
             Move();
@@ -133,12 +132,13 @@ public class player : MonoBehaviour
         if(!attacked)
         {
             damage = Random.Range(minDamage, maxDamage);
-            print(damage);
             attacked = true;
         }
 
         anim.CrossFade("attack");
         transform.LookAt(attackingEnemy.transform);
+
+        attackingEnemy.GetComponent<enemy>().aggro = true;
     }
 
     void OnTriggerEnter(Collider other)
