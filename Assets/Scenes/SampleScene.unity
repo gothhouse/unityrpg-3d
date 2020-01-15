@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHealth: 100
-  movementSpeed: 0.1
+  movementSpeed: 0.05
   aggro: 0
   attackTimer: 0
 --- !u!1 &478566170
@@ -416,7 +416,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
-  m_LocalPosition: {x: 0.47, y: 5.53, z: -9.32}
+  m_LocalPosition: {x: 0.47, y: 6.191, z: -10.262}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
