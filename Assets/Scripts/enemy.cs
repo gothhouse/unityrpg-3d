@@ -5,7 +5,7 @@ using UnityEngine;
 public class enemy : MonoBehaviour
 {
     //variables
-    public float enemyHealth;
+    public float maxHealth;
     private float health;
     public float movementSpeed;
 
@@ -16,14 +16,18 @@ public class enemy : MonoBehaviour
 
     public float attackTimer;
     private float _attackTimer;
+    private bool attacked;
 
     public float maxDamage;
     public float minDamage;
+    public float damage;
 
     //functions
     void Start()
     {
         player = GameObject.FindWithTag("Player");
+        _attackTimer = attackTimer;
+        health = maxHealth;
     }
 
     void Update()
@@ -56,7 +60,13 @@ public class enemy : MonoBehaviour
 
     public void Attack()
     {
-
+        if(!attacked)
+        {
+            damage = Random.Range(minDamage, maxDamage);
+            player.GetComponent<player>().health -= damage;
+            attacked = true;
+            print("enemy attacked player");
+        }
     }
 
     public void FollowPlayer()
@@ -65,5 +75,16 @@ public class enemy : MonoBehaviour
         {
             this.transform.position = Vector3.MoveTowards(transform.position, player.transform.position, movementSpeed);
         }
+
+        if (_attackTimer <= 0)
+        {
+            attacked = false;
+            _attackTimer = attackTimer;
+        }
+
+        if (attacked)
+            _attackTimer -= 1 * Time.deltaTime;
+
+        Attack();
     }
 }

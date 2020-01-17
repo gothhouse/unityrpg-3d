@@ -151,10 +151,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf142995870fbf4487bef7f6bd7858c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 100
+  maxHealth: 100
   movementSpeed: 0.07
   aggro: 0
-  attackTimer: 0
+  attackTimer: 2
+  maxDamage: 10
+  minDamage: 5
+  damage: 0
 --- !u!1 &478566170
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,6 +547,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c678cc63fb6c394796faea2830e1a64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  health: 0
   movementSpeed: 0.1
   attackTimer: 1.5
   minDamage: 10
@@ -738,7 +743,7 @@ PrefabInstance:
     - target: {fileID: 7746531668744019249, guid: 8c5062c74479b734b8575747f7b7d98b,
         type: 3}
       propertyPath: m_Size.z
-      value: 1.3624284
+      value: 1.5351903
       objectReference: {fileID: 0}
     - target: {fileID: 7746531668744019249, guid: 8c5062c74479b734b8575747f7b7d98b,
         type: 3}
@@ -748,7 +753,7 @@ PrefabInstance:
     - target: {fileID: 7746531668744019249, guid: 8c5062c74479b734b8575747f7b7d98b,
         type: 3}
       propertyPath: m_Center.z
-      value: -0.074349284
+      value: -0.16073024
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c5062c74479b734b8575747f7b7d98b, type: 3}

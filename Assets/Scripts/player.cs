@@ -7,6 +7,9 @@ public class player : MonoBehaviour
     //Variables
 
     // player
+    public float maxHealth;
+    public float health;
+
     public float movementSpeed;
     Animation anim;
 
@@ -45,6 +48,7 @@ public class player : MonoBehaviour
         pmr.GetComponent<BoxCollider>().enabled = false;
         anim = GetComponent<Animation>();
         currentAttackTimer = attackTimer;
+        health = maxHealth;
     }
     void Update()
     {
