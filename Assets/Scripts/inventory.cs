@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class inventory : MonoBehaviour
 {
-    // Start is called before the first frame update
+    //Variables
+    bool inventoryEnabled;
+
+    public GameObject Inventory;
+
+    //Functions
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        //Enabling the Inventory
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            inventoryEnabled = !inventoryEnabled;
+
+        }
+
+        if (inventoryEnabled)
+        {
+            Inventory.SetActive(true);
+
+        } else {
+            Inventory.SetActive(false);
+        }
+
+
     }
 }
