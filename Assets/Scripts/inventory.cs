@@ -18,6 +18,18 @@ public class inventory : MonoBehaviour
 
     void Update()
     {
+        //Dectecting Slots
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if(Physics.Raycast(ray, out hit)) 
+        {
+            if(hit.transform.name == "Slot")
+            {
+                print("Colliding with" + hit.transform.name);
+            }
+        }
+
         //Enabling the Inventory
         if(Input.GetKeyDown(KeyCode.I))
         {
