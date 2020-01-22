@@ -26,6 +26,8 @@ public class player : MonoBehaviour
 
     private bool attacked;
 
+    Plane playerPlane;
+
     // pmr
     public GameObject playerMovePoint;
     private Transform pmr;
@@ -39,8 +41,6 @@ public class player : MonoBehaviour
 
 
 
-
-
     //Functions
     void Start()
     {
@@ -49,11 +49,13 @@ public class player : MonoBehaviour
         anim = GetComponent<Animation>();
         currentAttackTimer = attackTimer;
         health = maxHealth;
+
+        playerPlane = new Plane(Vector3.up, transform.position);
     }
     void Update()
     {
         //player mvt
-        Plane playerPlane = new Plane(Vector3.up, transform.position);
+       
         Ray ray = UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         float hitDistance = 0.0f;

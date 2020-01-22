@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class slots : MonoBehaviour
 {
-    // Start is called before the first frame update
+    //Variables
+    public static bool selected;
+
+    public static bool used;
+    public Texture2D image;
+
+
+
+
+    //Functions
     void Start()
     {
         
+        
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
+
 }
