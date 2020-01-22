@@ -8,6 +8,7 @@ public class inventory : MonoBehaviour
     bool inventoryEnabled;
 
     public GameObject Inventory;
+    public GameObject playerCamera;
 
     //Functions
     void Start()
@@ -27,9 +28,11 @@ public class inventory : MonoBehaviour
         if (inventoryEnabled)
         {
             Inventory.SetActive(true);
+            playerCamera.GetComponent<Camera>().orthographic = true;
 
         } else {
             Inventory.SetActive(false);
+            playerCamera.GetComponent<Camera>().orthographic = false;
         }
 
 
